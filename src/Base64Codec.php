@@ -7,11 +7,11 @@ namespace Codecs;
  * 
  * @api
  * @since 1.0.0
- * @version 1.0.0
+ * @version 1.1.0
  * @package base64-codec
  * @author Ali M. Kamel <ali.kamel.dev@gmail.com>
  */
-class Base64Codec implements ICodec {
+class Base64Codec extends Codec {
 
     /**
      * Creates a new instance of the Base64Codec class.
@@ -22,21 +22,21 @@ class Base64Codec implements ICodec {
      * 
      * @param bool $strict If true, the decoding will be strict, meaning that it will return false on invalid input. If false, it will ignore invalid characters and decode as much as possible.
      */
-    public function __construct(public readonly bool $strict) {}
+    public function __construct(public readonly bool $strict = true) {}
 
     /**
      * Encodes a value into a string representation.
      * 
-     * @api
      * @final
      * @override
+     * @internal
      * @since 1.0.0
      * @version 1.0.0
      * 
      * @param string $value
      * @return string
      */
-    public final function encode(mixed $value): string {
+    protected final function doEncode(mixed $value): string {
 
         return base64_encode($value);
     }
@@ -44,16 +44,16 @@ class Base64Codec implements ICodec {
     /**
      * Decodes a string representation back into its original value.
      * 
-     * @api
      * @final
      * @override
+     * @internal
      * @since 1.0.0
      * @version 1.0.0
      * 
      * @param string $code
      * @return string
      */
-    public final function decode(string $code): mixed {
+    protected final function doDecode(string $code): mixed {
 
         return base64_decode($code, $this->strict);
     }
